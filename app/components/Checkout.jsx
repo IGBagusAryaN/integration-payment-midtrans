@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-
+import { product } from "../libs/product";
 const Checkout = () => {
   const [quantity, setQuantity] = useState(1);
 
@@ -12,7 +12,26 @@ const Checkout = () => {
   };
 
   const checkout = async () => {
-    alert("Checkout SNAP! 🌟")
+    // parameter yang dikirim dari frontend ke backend
+    const data = {
+      id: product.id,
+      productName: product.name,
+      price: product.price,
+      quantity: quantity
+    }
+
+    // fetch api
+    const response = await fetch("api/tokenizer", {
+      method: "POST",
+      body: JSON.stringify(data)
+    })
+
+    // tampung data
+    const requestData = await response.json();
+    // console.log({requestData})
+
+    // panggil token ke snap
+    window.snap.pay(requestData.token);
   };
 
   const generatePaymentLink = async () => {
@@ -46,7 +65,7 @@ const Checkout = () => {
           </button>
         </div>
         <button
-          className="rounded bg-indigo-500 p-4 text-sm font-medium transition hover:scale-105"
+          className="rounded bg-indigo-500 p-4 text-sm font-medium transition hover:scale-105 text-white"
           onClick={checkout}
         >
           Checkout
