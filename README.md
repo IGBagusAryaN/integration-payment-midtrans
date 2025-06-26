@@ -1,3 +1,3 @@
 # Next JS -> Payment Gateway Midtrans
 
--page template use to implement payment gateway (sandbox).
+-How to integrate midtrans payment gateway using javascript --just for learning
